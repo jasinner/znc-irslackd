@@ -21,16 +21,17 @@ RUN set -x && \
            libtool-ltdl libnsl libstdc++ libicu-devel ncurses npm  \
            gcc gcc-c++ openssl-devel cmake make curl wget hostname \
            findutils telnet git npm procps-ng net-tools gnupg      \
-           perl-HTTP-Daemon-SSL rsync                           && \
+           perl-HTTP-Daemon-SSL rsync znc-devel libcurl-devel      \
+           zlib-devel  && \
     yum clean all && \
     rm -rf /var/cache/yum
 
 
 # Args to fetch and compile znc
 ENV GPG_KEY D5823CACB477191CAC0075555AE420CC0209989E
-ENV ZNC_VERSION 1.7.4
+ENV ZNC_VERSION 1.7.5
 
-ARG CMAKEFLAGS="-DCMAKE_INSTALL_PREFIX=/opt/znc -DWANT_CYRUS=NO -DWANT_PERL=NO -DWANT_PYTHON=NO -DWANT_IPV6=NO"
+ARG CMAKEFLAGS="-DCMAKE_INSTALL_PREFIX=/opt/znc -DWANT_CYRUS=NO -DWANT_PERL=NO -DWANT_PYTHON=NO -DWANT_IPV6=YES"
 ARG MAKEFLAGS=""
 
 RUN set -x && \
@@ -63,6 +64,13 @@ RUN set -x && \
     npm install && \
     # Prepare local dirs \
     mkdir /data
+
+RUN set -x && \
+  cd /opt && \
+  git clone https://github.com/jreese/znc-push.git && \
+  cd znc-push && \
+  make curl=yes && \
+  cp push.so /opt/znc/lib64/znc
 
 VOLUME /data
 

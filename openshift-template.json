@@ -108,7 +108,7 @@
         "source": {
           "type": "Git",
           "git": {
-            "uri": "https://github.com/dbaker-rh/znc-irslackd.git"
+            "uri": "https://github.com/jasinner/znc-irslackd.git"
           }
         },
         "strategy": {
