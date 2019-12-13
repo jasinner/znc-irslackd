@@ -69,7 +69,7 @@ RUN set -x && \
   cd /opt && \
   git clone https://github.com/jreese/znc-push.git && \
   cd znc-push && \
-  make curl=yes ipv6=no && \
+  make curl=yes && \
   cp push.so /opt/znc/lib64/znc
 
 VOLUME /data
